@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+// Função para calcular o máximo divisor comum (MDC)
+int mdc(int a, int b) {
+    while (b != 0) {
+        int temporario = b;
+        b = a % b;
+        a = temporario;
+    }
+    return a;
+}
+
+int main() {
+    int num1, den1, num2, den2, numres, denres;
+    char operacao;
+
+    // Entrada das frações e da operação
+    printf("Digite a primeira fracao (numerador/denominador):\n");
+    scanf("%d/%d", &num1, &den1);
+
+    printf("Digite a operacao (+, -, *, /):\n");
+    scanf(" %c", &operacao);
+
+    printf("Digite a segunda fracao (numerador/denominador):\n");
+    scanf("%d/%d", &num2, &den2);
+
+    // Verifica se os denominadores são válidos
+    if (den1 == 0 || den2 == 0) {
+        printf("Erro: o denominador nao pode ser zero.\n");
+        return 1;
+    }
+
+    // Realiza a operação escolhida
+    if (operacao == '+') {
+        numres = num1 * den2 + num2 * den1; // Soma
+        denres = den1 * den2;
+    } else if (operacao == '-') {
+        numres = num1 * den2 - num2 * den1; // Subtração
+        denres = den1 * den2;
+    } else if (operacao == '*') {
+        numres = num1 * num2; // Multiplicação
+        denres = den1 * den2;
+    } else if (operacao == '/') {
+        if (num2 == 0) {
+            printf("Erro: divisao por zero.\n");
+            return 1;
+        }
+        numres = num1 * den2; // Divisão
+        denres = den1 * num2;
+    } else {
+        printf("Operação invalida.\n");
+        return 1;
+    }
+
+    // Simplifica o resultado
+    int divisor = mdc(numres, denres);
+    int numeradorsimplificado = numres / divisor;
+    int denominadorsimplificado = denres / divisor;
+
+    // Exibe o resultado
+    printf("Resultado: %d/%d\n", numeradorsimplificado, denominadorsimplificado);
+
+    return 0;
+}

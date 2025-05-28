@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+//ALUNO: MARCELO DE OLIVEIRA JUNIOR
+
+#define LIMITE_PRODUTOS 200
+#define LIMITE_CLIENTES 50
+
+int main() {
+    int quantidadeProdutos, quantidadeClientes;
+    float valoresProdutos[LIMITE_PRODUTOS];
+    int itensComprados[LIMITE_CLIENTES];
+
+    srand(time(NULL)); // Inicializa o gerador de números aleatórios
+
+    // Gera quantidade de produtos e clientes aleatoriamente
+    quantidadeProdutos = 10 + rand() % (LIMITE_PRODUTOS - 9); // de 10 a 200 produtos
+    quantidadeClientes = 5 + rand() % (LIMITE_CLIENTES - 4);  // de 5 a 50 clientes
+
+    // Gera preços dos produtos aleatoriamente entre 5.00 e 100.00
+    for (int indice = 0; indice < quantidadeProdutos; indice++) {
+        valoresProdutos[indice] = 5.0 + ((float)rand() / RAND_MAX) * (100.0 - 5.0);
+    }
+
+    // Cada cliente compra um produto aleatório
+    for (int indice = 0; indice < quantidadeClientes; indice++) {
+        itensComprados[indice] = rand() % quantidadeProdutos;
+    }
+
+    // Exibe os produtos e seus preços
+    printf("Produtos disponiveis:\n");
+    for (int indice = 0; indice < quantidadeProdutos; indice++) {
+        printf("Produto %d: R$ %.2f\n", indice + 1, valoresProdutos[indice]);
+    }
+
+    // Exibe as compras dos clientes
+    printf("\nCompras dos clientes:\n");
+    float somaTotal = 0;
+    for (int indice = 0; indice < quantidadeClientes; indice++) {
+        int codigoProduto = itensComprados[indice];
+        printf("Cliente %d comprou o produto %d por R$ %.2f\n", indice + 1, codigoProduto + 1, valoresProdutos[codigoProduto]);
+        somaTotal += valoresProdutos[codigoProduto];
+    }
+
+    printf("\nTotal vendido no dia: R$ %.2f\n", somaTotal);
+
+    return 0;
+}
